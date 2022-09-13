@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-api
+  labels:
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: web
+    spec:
+      containers:
+      - name: hello-api
+        image: gcr.io/project-id/image:tag
+        ports:
+        - containerPort: 9000
+        resources:
+          requests:
+            cpu: 200m

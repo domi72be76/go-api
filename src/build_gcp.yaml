@@ -1,0 +1,15 @@
+steps:
+  # build the container image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "gcr.io/project-id/image:tag", "."]
+  # push container image to Google Clioud Repository
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/project-id/image:tag"]
+  # deploy container image to Google Kubernetes Engine
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=k8s/kube.yaml
+  - --image=gcr.io/project-id/image:tag
+  - --location=europe-west2-a
+  - --cluster=my-cluster
